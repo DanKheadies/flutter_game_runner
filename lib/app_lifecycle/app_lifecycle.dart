@@ -24,14 +24,6 @@ class _AppLifecycleObserverState extends State<AppLifecycleObserver> {
       ValueNotifier(AppLifecycleState.inactive);
 
   @override
-  Widget build(BuildContext context) {
-    return InheritedProvider<AppLifecycleStateNotifier>.value(
-      value: lifecycleListenable,
-      child: widget.child,
-    );
-  }
-
-  @override
   void initState() {
     super.initState();
     appLifecycleListener = AppLifecycleListener(
@@ -44,5 +36,13 @@ class _AppLifecycleObserverState extends State<AppLifecycleObserver> {
   void dispose() {
     appLifecycleListener.dispose();
     super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return InheritedProvider<AppLifecycleStateNotifier>.value(
+      value: lifecycleListenable,
+      child: widget.child,
+    );
   }
 }

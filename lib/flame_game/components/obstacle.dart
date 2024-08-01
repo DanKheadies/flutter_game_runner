@@ -14,25 +14,28 @@ enum ObstacleType {
 /// The [Obstacle] component can represent three different types of obstacles
 /// that the player can run into.
 class Obstacle extends SpriteComponent with HasWorldReference<EndlessWorld> {
+  final Vector2 srcSize;
+  final Vector2 srcPosition;
+
   Obstacle.small({super.position})
-      : _srcSize = Vector2.all(16),
-        _srcPosition = Vector2.all(32),
+      : srcSize = Vector2.all(16),
+        srcPosition = Vector2.all(32),
         super(
           size: Vector2.all(150),
           anchor: Anchor.bottomLeft,
         );
 
   Obstacle.tall({super.position})
-      : _srcSize = Vector2(32, 48),
-        _srcPosition = Vector2.zero(),
+      : srcSize = Vector2(32, 48),
+        srcPosition = Vector2.zero(),
         super(
           size: Vector2(200, 250),
           anchor: Anchor.bottomLeft,
         );
 
   Obstacle.wide({super.position})
-      : _srcSize = Vector2(32, 16),
-        _srcPosition = Vector2(48, 32),
+      : srcSize = Vector2(32, 16),
+        srcPosition = Vector2(48, 32),
         super(
           size: Vector2(200, 100),
           anchor: Anchor.bottomLeft,
@@ -55,17 +58,14 @@ class Obstacle extends SpriteComponent with HasWorldReference<EndlessWorld> {
     };
   }
 
-  final Vector2 _srcSize;
-  final Vector2 _srcPosition;
-
   @override
   Future<void> onLoad() async {
     // Since all the obstacles reside in the same image, srcSize and srcPosition
     // are used to determine what part of the image that should be used.
     sprite = await Sprite.load(
       'enemies/obstacles.png',
-      srcSize: _srcSize,
-      srcPosition: _srcPosition,
+      srcSize: srcSize,
+      srcPosition: srcPosition,
     );
     // When adding a RectangleHitbox without any arguments it automatically
     // fills up the size of the component.
